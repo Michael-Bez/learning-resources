@@ -19,6 +19,13 @@ A practical introduction to JavaScript programming.
 11. [Functions](#functions)
 12. [Scope and Closures](#scope-and-closures)
 13. [Array Methods](#array-methods)
+14. [Destructuring](#destructuring)
+15. [Spread and Rest](#spread-and-rest)
+16. [Modules](#modules)
+17. [Promises and Async/Await](#promises-and-asyncawait)
+18. [Error Handling](#error-handling)
+19. [The DOM](#the-dom)
+20. [Quick Reference Cheat Sheet](#quick-reference-cheat-sheet)
 
 ---
 
@@ -428,3 +435,265 @@ const result = [1, 2, 3, 4, 5, 6]
 ```
 
 ---
+
+## Destructuring
+
+### Array Destructuring
+
+```javascript
+const [a, b, c] = [1, 2, 3];           // a=1, b=2, c=3
+const [first, , third] = [1, 2, 3];    // Skip second: first=1, third=3
+const [head, ...rest] = [1, 2, 3, 4];  // head=1, rest=[2,3,4]
+
+// Swap variables
+[a, b] = [b, a];
+```
+
+### Object Destructuring
+
+```javascript
+const { name, age } = user;
+const { name: fullName } = user;        // Rename to fullName
+const { name, city = "Unknown" } = user; // Default value
+
+// In function parameters
+function display({ name, age }) {
+  console.log(name, age);
+}
+
+// Nested
+const { address: { city } } = user;
+```
+
+---
+
+## Spread and Rest
+
+```javascript
+// Spread — expand an iterable into individual elements
+const a = [1, 2, 3];
+const b = [4, 5, 6];
+const combined = [...a, ...b];          // [1, 2, 3, 4, 5, 6]
+
+const copy = [...a];                    // Shallow copy of array
+const objCopy = { ...user };           // Shallow copy of object
+const updated = { ...user, age: 31 }; // Merge/override
+
+Math.max(...a);                        // Same as Math.max(1, 2, 3)
+
+// Rest — collect remaining elements
+const [first, ...others] = [1, 2, 3, 4];
+// first=1, others=[2, 3, 4]
+
+function sum(a, b, ...rest) {
+  // rest holds all arguments after a and b
+}
+```
+
+---
+
+## Modules
+
+```javascript
+// math.js — named exports
+export const PI = 3.14;
+export function add(a, b) { return a + b; }
+
+// app.js — named imports
+import { PI, add } from "./math.js";
+
+// Default export (one per file)
+export default function greet(name) { return `Hi, ${name}`; }
+
+// Default import (any name works)
+import greet from "./greet.js";
+
+// Import everything as a namespace
+import * as Math from "./math.js";
+Math.add(1, 2);
+```
+
+---
+
+## Promises and Async/Await
+
+### Promises
+
+A Promise represents a value that will be available in the future.
+
+```javascript
+const p = new Promise((resolve, reject) => {
+  // Async work...
+  if (success) resolve(data);
+  else reject(new Error("Failed"));
+});
+
+p.then(data => console.log(data))
+ .catch(err => console.error(err))
+ .finally(() => console.log("Done"));
+
+// Run multiple promises in parallel
+Promise.all([fetchUser(), fetchPosts()])
+  .then(([user, posts]) => console.log(user, posts));
+```
+
+### Async/Await
+
+Syntactic sugar over Promises — makes async code look synchronous:
+
+```javascript
+async function loadData() {
+  try {
+    const response = await fetch("https://api.example.com/data");
+    const data = await response.json();
+    console.log(data);
+  } catch (err) {
+    console.error("Failed:", err);
+  }
+}
+
+// In parallel
+const [user, posts] = await Promise.all([fetchUser(), fetchPosts()]);
+```
+
+---
+
+## Error Handling
+
+```javascript
+try {
+  const data = JSON.parse(invalidJson);
+} catch (err) {
+  console.error(err.message);   // Access the error message
+  console.error(err.name);      // "SyntaxError"
+} finally {
+  console.log("Always runs");
+}
+
+// Throw a custom error
+function divide(a, b) {
+  if (b === 0) throw new Error("Cannot divide by zero");
+  return a / b;
+}
+
+// Custom error class
+class ValidationError extends Error {
+  constructor(message, field) {
+    super(message);
+    this.name = "ValidationError";
+    this.field = field;
+  }
+}
+```
+
+---
+
+## The DOM
+
+The Document Object Model (DOM) lets JavaScript interact with HTML in the browser.
+
+### Selecting Elements
+
+```javascript
+document.getElementById("header")          // By id
+document.querySelector(".card")            // First match by CSS selector
+document.querySelectorAll(".card")         // All matches (NodeList)
+document.querySelector("nav a.active")     // Nested selector
+```
+
+### Modifying Elements
+
+```javascript
+const el = document.querySelector("h1");
+
+el.textContent = "New Heading";            // Set text (safe)
+el.innerHTML = "<span>Bold</span>";        // Set HTML (careful with user input)
+el.style.color = "red";
+el.style.fontSize = "2rem";
+
+el.classList.add("active");
+el.classList.remove("active");
+el.classList.toggle("active");
+el.classList.contains("active");           // true/false
+
+el.setAttribute("data-id", "42");
+el.getAttribute("data-id");               // "42"
+el.removeAttribute("hidden");
+```
+
+### Creating and Inserting Elements
+
+```javascript
+const div = document.createElement("div");
+div.textContent = "Hello";
+div.className = "card";
+
+document.body.appendChild(div);            // Add as last child
+parent.insertBefore(div, sibling);         // Before another element
+parent.prepend(div);                       // As first child
+el.after(div);                             // After the element
+el.remove();                               // Remove the element
+```
+
+### Events
+
+```javascript
+button.addEventListener("click", function(event) {
+  event.preventDefault();                  // Stop default behaviour (e.g. form submit)
+  event.stopPropagation();                 // Stop event bubbling up
+  console.log(event.target);              // The element that was clicked
+});
+
+// Common event types
+"click"        // Mouse click
+"dblclick"     // Double click
+"mouseover"    // Mouse enters element
+"keydown"      // Key pressed
+"keyup"        // Key released
+"submit"       // Form submitted
+"input"        // Input value changes
+"change"       // Input loses focus with a new value
+"DOMContentLoaded"  // HTML fully parsed
+"load"         // Page fully loaded (including images)
+```
+
+---
+
+## Quick Reference Cheat Sheet
+
+| Task | Syntax |
+|------|--------|
+| Declare constant | `const x = 1` |
+| Declare variable | `let x = 1` |
+| Template literal | `` `Hello ${name}` `` |
+| Arrow function | `const f = (x) => x * 2` |
+| Default parameter | `function f(x = 0) {}` |
+| Destructure array | `const [a, b] = arr` |
+| Destructure object | `const { name } = obj` |
+| Spread | `[...a, ...b]` |
+| Rest | `(...args) => {}` |
+| Optional chaining | `obj?.a?.b` |
+| Nullish coalescing | `val ?? "default"` |
+| Ternary | `x > 0 ? "pos" : "neg"` |
+| For...of | `for (const x of arr) {}` |
+| For...in | `for (const k in obj) {}` |
+| Array map | `arr.map(x => x * 2)` |
+| Array filter | `arr.filter(x => x > 0)` |
+| Array reduce | `arr.reduce((acc, x) => acc + x, 0)` |
+| Find first | `arr.find(x => x > 2)` |
+| Check any | `arr.some(x => x > 2)` |
+| Check all | `arr.every(x => x > 0)` |
+| Object keys | `Object.keys(obj)` |
+| Object entries | `Object.entries(obj)` |
+| Async function | `async function f() {}` |
+| Await | `const data = await fetch(url)` |
+| Try/catch | `try { } catch (e) { }` |
+| Import | `import { x } from "./file"` |
+| Export | `export const x = 1` |
+| Select element | `document.querySelector(".cls")` |
+| Add event | `el.addEventListener("click", fn)` |
+| Toggle class | `el.classList.toggle("active")` |
+
+---
+
+*Part of the learning-resources collection.*
