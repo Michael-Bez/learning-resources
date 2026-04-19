@@ -16,7 +16,7 @@ A personal collection of guides and reference material for learning various topi
 | [JSON Guide](json/json-guide.md) | A complete reference for JSON — syntax, data types, nesting, and usage in JavaScript and Python. |
 | [Git Guide](git/git-guide.md) | A complete reference for version control with Git — commits, branches, remotes, and a cheat sheet. |
 | [JavaScript Basics Guide](javascript/javascript-basics-guide.md) | A practical introduction to JavaScript — variables, arrays, async/await, DOM, and more. |
-| [SQL Basics Guide](sql-basics-guide.md) | A practical introduction to SQL — SELECT, filtering, joins, aggregation, and schema management. |
+| [SQL Basics Guide](sql/sql-basics-guide.md) | A practical introduction to SQL — SELECT, filtering, joins, aggregation, and schema management. |
 ---
 
 *More content will be added over time.*
