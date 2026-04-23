@@ -18,6 +18,7 @@ A personal collection of guides and reference material for learning various topi
 | [Bash Guide](bash/bash-guide.md) | A complete reference for the Bash shell — navigation, scripting, pipes, loops, and more. |
 | [JavaScript Basics Guide](javascript/javascript-basics-guide.md) | A practical introduction to JavaScript — variables, arrays, async/await, DOM, and more. |
 | [SQL Basics Guide](sql/sql-basics-guide.md) | A practical introduction to SQL — SELECT, filtering, joins, aggregation, and schema management. |
+| [Python Basics Guide](python/python-basics-guide.md) | A practical introduction to Python — data types, functions, classes, and standard patterns. |
 ---
 
 *More content will be added over time.*
