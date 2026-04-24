@@ -19,6 +19,7 @@ A personal collection of guides and reference material for learning various topi
 | [JavaScript Basics Guide](javascript/javascript-basics-guide.md) | A practical introduction to JavaScript — variables, arrays, async/await, DOM, and more. |
 | [SQL Basics Guide](sql/sql-basics-guide.md) | A practical introduction to SQL — SELECT, filtering, joins, aggregation, and schema management. |
 | [Python Basics Guide](python/python-basics-guide.md) | A practical introduction to Python — data types, functions, classes, and standard patterns. |
+| [Regex Guide](regex/regex-guide.md) | A short practical guide to regular expressions — syntax, patterns, and usage in JS and Python. |
 ---
 
 *More content will be added over time.*
